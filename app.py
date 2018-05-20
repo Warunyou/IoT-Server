@@ -28,6 +28,8 @@ USER_TOP_TOKEN = os.environ.get('user_top_id')
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
 
+db =''
+
 #---------------------------------------------------------------------------------------
 # Web Hook For LINE
 #---------------------------------------------------------------------------------------
@@ -74,8 +76,11 @@ def callback():
 
 	return result
 
-
-
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+	global db
+	text = event.message.id #message from user
+	db = text
 
 @app.route('/push_to_line', methods=['POST'])
 def push_to_line():
@@ -91,6 +96,16 @@ def push_to_line():
 
 	result = {'status':'success'}
 	return json.dumps(result)
+
+@app.route('/message_checker',methods=['POST'])
+def message_checker():
+	global db
+	if db !='':
+		temp = db
+		db = ''
+		return temp
+	else:
+		return 'None'
 
 if __name__ == "__main__":
     app.run()
