@@ -18,7 +18,7 @@ app = Flask(__name__)
 
 
 CHANNEL_SECRET = os.environ.get('provider_channel_secret')
-CHANNEL_ACCESS_TOKEN = os.environ.get('PMAR_channel_access_token')
+CHANNEL_ACCESS_TOKEN = os.environ.get('provider_channel_access_token')
 
 USER_RAM_TOKEN = os.environ.get('user_ram_id')
 USER_TOP_TOKEN = os.environ.get('user_top_id')
