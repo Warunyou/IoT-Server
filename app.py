@@ -28,6 +28,25 @@ USER_TOP_TOKEN = os.environ.get('user_top_id')
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
 
+#---------------------------------------------------------------------------------------
+# Web Hook For LINE
+#---------------------------------------------------------------------------------------
+@app.route('/line_callback', methods=['POST'])
+def line_callback():
+
+    signature = request.headers['X-Line-Signature']
+    body = request.get_data(as_text=True)
+    app.logger.info("Request body: " + body)
+    
+    try:
+        handler.handle(body, signature)
+    except InvalidSignatureError:
+        abort(400)
+
+    return request.data
+
+
+
 
 @app.route('/')
 def index():
@@ -54,6 +73,8 @@ def callback():
 	result = result + 'user_message: ' + user_message + '\n'
 
 	return result
+
+
 
 
 @app.route('/push_to_line', methods=['POST'])
