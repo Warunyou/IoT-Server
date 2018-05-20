@@ -17,10 +17,12 @@ def hello():
 @app.route('/callback', methods=['POST'])
 def callback():
 	payload = request.get_json()
-	jsonstring = json.dumps(payload)
+	json_string = json.dumps(payload)
 	data_dict = json.loads(jsonstring)
+
 	user_name = data_dict['name']
 	user_id = data_dict['id']
+
 	result = json_string + '\n'
 	result = result + user_name +' '+user_id
 	
