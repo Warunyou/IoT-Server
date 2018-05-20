@@ -79,7 +79,7 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 	global db
-	text = event.message.id #message from user
+	text = event.message.text #message from user
 	db = text
 
 @app.route('/push_to_line', methods=['POST'])
